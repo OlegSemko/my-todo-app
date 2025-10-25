@@ -1,0 +1,21 @@
+<div [formGroup]="form" class="form">
+    <div class="control">
+        <label for="email">Email Address:</label>
+        <input formControlName=email type="text" id="email">
+    </div>
+    <div class="control">
+        <label for="username">User Name:</label>
+        <input formControlName=username type="text" id="username">
+    </div>
+    <div class="control">
+        <label for="password">Password:</label>
+        <input formControlName=password type="text" id="password">
+    </div>
+    <div class="control">
+        <input type="submit" value="Register" (click)="onSubmit()">
+    </div>
+</div>
+
+@if (!!errorMessage()) {
+    <div class="error-text">{{errorMessage()}}</div>
+}
