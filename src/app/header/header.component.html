@@ -1,0 +1,11 @@
+<div class="header-container">
+  @if (authService.currentUser() === null) {
+    <a routerLink="/auth/login" routerLinkActive="active" class="login-link">Login</a>
+    <a routerLink="/auth/register" routerLinkActive="active" class="login-link">Register</a>
+  }
+
+  @if (authService.currentUser()) {
+    <span class="greating">Hello, {{authService.currentUser()?.username}}</span>
+    <span class="logout-button" (click)="logout()">Logout</span>
+  }
+</div>

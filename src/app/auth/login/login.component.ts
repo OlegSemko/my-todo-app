@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { ChangeDetectionStrategy, Component, inject, Signal, signal, WritableSignal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
@@ -7,7 +7,7 @@ import { AuthService } from "../../services/auth.service";
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrl: './login.component.scss',
+    styleUrl: '../auth.component.scss',
     imports: [
         ReactiveFormsModule
     ],
@@ -35,7 +35,7 @@ export class LoginComponent {
             if (result.error) {
                 this.errorMessage.set(result.error?.message);
             } else {
-                this.router.navigateByUrl('/');
+                this.router.navigateByUrl('/home');
             }
         })
     }

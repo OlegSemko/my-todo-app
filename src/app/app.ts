@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule],
+  imports: [RouterModule, HeaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -25,9 +26,5 @@ export class App {
       console.log('event', event);
       console.log('session', session);
     })
-  }
-
-  logout(): void {
-    this.authService.logout();
   }
 }

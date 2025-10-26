@@ -1,0 +1,20 @@
+.login-link, .logout-button {
+    cursor: pointer;
+    &:hover {
+        color: green;
+    }
+}
+
+.active {
+    color: red;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 8px;
+    height: 40px;
+    background-color: gainsboro;
+    padding: 0 8px;
+}

@@ -1,14 +1,4 @@
-<!-- todo move to a separate component -->
-<div class="login-controlers">
-  @if (authService.currentUser() === null) {
-    <a routerLink="/login" routerLinkActive="active" class="login-link">Login</a>
-    <a routerLink="/register" routerLinkActive="active" class="login-link">Register</a>
-  }
-
-  @if (authService.currentUser()) {
-    <span class="greating">Hello, {{authService.currentUser()?.username}}</span>
-    <span class="logout-button" (click)="logout()">Logout</span>
-  }
+<app-header></app-header>
+<div class="main">
+  <router-outlet></router-outlet>
 </div>
-
-<router-outlet></router-outlet>
