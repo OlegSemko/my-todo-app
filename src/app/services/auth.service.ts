@@ -1,18 +1,19 @@
-import { Injectable, signal, WritableSignal } from "@angular/core";
-import { AuthResponse, createClient } from "@supabase/supabase-js";
-import { environment } from "../../environments/environment.development";
+import { inject, Injectable, signal, WritableSignal } from "@angular/core";
+import { AuthResponse } from "@supabase/supabase-js";
 import { from, Observable } from "rxjs";
+import { SupabaseService } from "./supabase.service";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class AuthService {
-    supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-    currentUser: WritableSignal<{email: string, username: string} | null> = signal<{email: string, username: string} | null>(null);
+    private supabase = inject(SupabaseService);
+
+    currentUser: WritableSignal<{id: string | undefined, email: string, username: string} | null> = signal<{id: string | undefined, email: string, username: string} | null>(null);
 
     register(email: string, username: string, password: string): Observable<AuthResponse> {
-        const promise = this.supabase.auth.signUp({
+        const promise = this.supabase.client.auth.signUp({
             email,
             password,
             options: {
@@ -25,7 +26,7 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<AuthResponse> {
-        const promise = this.supabase.auth.signInWithPassword({
+        const promise = this.supabase.client.auth.signInWithPassword({
             email,
             password,
         });
@@ -33,6 +34,6 @@ export class AuthService {
     }
 
     logout(): void {
-        this.supabase.auth.signOut();
+        this.supabase.client.auth.signOut();
     }
 }
