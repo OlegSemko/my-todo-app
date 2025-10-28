@@ -26,8 +26,6 @@ export class App {
       } else if (event === 'SIGNED_OUT') {
         this.authService.currentUser.set(null);
       }
-      console.log('event', event);
-      console.log('session', session);
     })
   }
 }

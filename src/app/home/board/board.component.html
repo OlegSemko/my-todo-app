@@ -1,0 +1,17 @@
+<div class="board">
+    <div class="board-header">
+        {{ board().created_at | date }}
+    </div>
+    <div class="board-body">
+        {{ board().title }}
+    </div>
+    <div class="board-footer">
+        <span>
+            {{ board().raw_user_meta_data.username }}
+        </span>
+        <span>
+            {{ board().raw_user_meta_data.email }}
+        </span>
+    </div>
+</div>
+

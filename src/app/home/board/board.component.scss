@@ -1,0 +1,13 @@
+.board {
+    height: 200px;
+    width: 200px;
+    background-color: gray;
+    border-radius: 4px;
+    color: yellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    padding: 8px;
+}
