@@ -22,4 +22,21 @@ export class SupabaseApiService {
 
     return from(promise);
   }
+
+  getBoardTodos(boardId: number) {
+    const promise = this.supabase.client
+    .from('tasks')
+  .select('*');
+      // .from('boards')
+      // .select(`
+      //   id,
+      //   title,
+      //   owner_id,
+      //   board_members(user_id)
+      // `)
+      // .eq('board_members.user_id', userId);
+      // .or(`owner_id.eq.${userId},board_members.user_id.eq.${userId}`);
+
+    return from(promise);
+  }
 }

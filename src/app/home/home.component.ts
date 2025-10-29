@@ -3,6 +3,7 @@ import { SupabaseApiService } from "../services/supabase-api.service";
 import { AuthService } from "../services/auth.service";
 import { BoardComponent } from "./board/board.component";
 import { IBoard } from "../intrefaces";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-home',
@@ -17,8 +18,14 @@ export class HomeComponent implements OnInit {
     authService = inject(AuthService);
     readonly boards: WritableSignal<IBoard[]> = signal<IBoard[]>([]);
 
+    constructor(private router: Router) {}
+
     ngOnInit(): void {
         this.getUsersBoards();
+    }
+    
+    goToBoard(id: number) {
+        this.router.navigate(['/boards', id]);
     }
 
     private getUsersBoards(): void {

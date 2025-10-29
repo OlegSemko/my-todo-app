@@ -35,7 +35,7 @@ export class LoginComponent {
             if (result.error) {
                 this.errorMessage.set(result.error?.message);
             } else {
-                this.router.navigateByUrl('/home');
+                this.router.navigateByUrl('/boards');
             }
         })
     }

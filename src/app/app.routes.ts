@@ -4,6 +4,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AuthComponent } from './auth/auth.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found-page/not-found.component';
+import { BoardDetailsComponent } from './home/board-details/board-details.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/auth', pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
             { path: 'register', component: RegisterComponent },
         ]
     },
-    { path: 'home', component: HomeComponent },
+    { path: 'boards', component: HomeComponent },
+    { path: 'boards/:id', component: BoardDetailsComponent },
     { path: '**', component: NotFoundComponent }
 ];

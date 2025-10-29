@@ -9,3 +9,9 @@ export interface IBoard {
     username: string;
   }
 }
+
+export interface IToDo {
+  id: number;
+  text: string;
+  title: string;
+}
