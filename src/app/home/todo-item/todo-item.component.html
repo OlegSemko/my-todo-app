@@ -1,0 +1,16 @@
+<div class="todo-item">
+    <div class="todo-title">
+        {{ todo().title }}
+    </div>
+    <div class="todo-description">
+        {{ todo().description }}
+    </div>
+    <div class="todo-footer">
+        <div class="todo-author">
+            {{ todo().created_by }}
+        </div>
+        <div class="todo-creation_date">
+            {{ todo().created_at | date }}
+        </div>
+    </div>
+</div>

@@ -5,12 +5,13 @@ import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { DatePipe } from "@angular/common";
+import { TodoItemComponent } from "../todo-item/todo-item.component";
 
 @Component({
     selector: 'app-board-details',
     templateUrl: './board-details.component.html',
     styleUrl: './board-details.component.scss',
-    imports: [ReactiveFormsModule, DatePipe],
+    imports: [ReactiveFormsModule, TodoItemComponent],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -43,7 +44,8 @@ export class BoardDetailsComponent implements OnInit {
                 console.log('error',result.error?.message);
             } else {
                 console.log('success', result);
-                this.todos.set(result.data);
+                // this.todos.set(result.data);
+                this.getUsersBoards();
             }
         });
     }
