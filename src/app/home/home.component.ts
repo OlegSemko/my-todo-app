@@ -38,6 +38,6 @@ export class HomeComponent implements OnInit {
                 console.log('success', result);
                 this.boards.set(result.data);
             }
-        })
+        });
     }
 }

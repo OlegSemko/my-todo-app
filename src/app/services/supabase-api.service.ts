@@ -39,4 +39,19 @@ export class SupabaseApiService {
 
     return from(promise);
   }
+
+  addTodo(userId: string, title: string, description: string) {
+    const promise = this.supabase.client
+      .from('tasks')
+      .insert([
+        {
+          title,
+          description,
+          created_by: userId,
+        },
+      ])
+      .select();
+
+    return from(promise);
+  }
 }

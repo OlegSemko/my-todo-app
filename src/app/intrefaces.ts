@@ -12,6 +12,8 @@ export interface IBoard {
 
 export interface IToDo {
   id: number;
-  text: string;
+  description: string;
   title: string;
+  created_by: string;
+  created_at: string;
 }
