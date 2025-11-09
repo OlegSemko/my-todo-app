@@ -5,6 +5,14 @@
   }
 
   @if (authService.currentUser()) {
+    <div class="nav-menu">
+      <a routerLink="/boards"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}"
+        class="nav-menu-item">
+        Home
+      </a>
+    </div>
     <span class="greating">Hello, {{authService.currentUser()?.username}}</span>
     <span class="logout-button" (click)="logout()">Logout</span>
   }

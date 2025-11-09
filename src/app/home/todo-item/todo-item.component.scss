@@ -3,7 +3,6 @@
 }
 
 .todo-item {
-    height: 100px;
     background-color: gray;
     border-radius: 4px;
     color: yellow;
@@ -25,4 +24,12 @@
 .todo-title {
     font-weight: 800;
     font-size: 24px;
+}
+
+.control {
+    cursor: pointer;
+
+    &:hover {
+        color: red;
+    }
 }

@@ -5,6 +5,14 @@
     <div class="todo-description">
         Description - {{ todo().description }}
     </div>
+    <div class="todo-status">
+        <label for="status-select">Task status:</label>
+        <select [formControl]="status" name="status" id="status-select">
+            <option value="to-do">To do</option>
+            <option value="in-progress">In progress</option>
+            <option value="done">Done</option>
+        </select>
+    </div>
     <div class="todo-footer">
         <div class="todo-author">
             Created by {{ todo().owner_metadata.username }}
@@ -13,4 +21,5 @@
             {{ todo().created_at | date }}
         </div>
     </div>
+    <div class="control" (click)="deleteItem()">Delete</div>
 </div>

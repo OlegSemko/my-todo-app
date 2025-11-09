@@ -42,4 +42,5 @@ export interface IToDo {
   created_at: string;
   owner_email: string;
   owner_metadata: IUserMetaData;
+  status: string | null;
 }

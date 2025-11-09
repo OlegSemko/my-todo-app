@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { from } from 'rxjs';
 import { SupabaseService } from './supabase.service';
+import { IToDo } from '../intrefaces';
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseApiService {
@@ -44,6 +45,25 @@ export class SupabaseApiService {
         },
       ])
       .select();
+
+    return from(promise);
+  }
+
+  updateTodo(taskId: number, body: Partial<IToDo>) {
+    const promise = this.supabase.client
+      .from('tasks')
+      .update(body)
+      .eq('id', taskId)
+      .select();
+
+    return from(promise);
+  }
+
+  deleteTodo(taskId: number) {
+    const promise = this.supabase.client
+      .from('tasks')
+      .delete()
+      .eq('id', taskId);
 
     return from(promise);
   }
