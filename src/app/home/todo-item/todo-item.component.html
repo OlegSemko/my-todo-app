@@ -1,13 +1,13 @@
 <div class="todo-item">
     <div class="todo-title">
-        {{ todo().title }}
+        Title - {{ todo().title }}
     </div>
     <div class="todo-description">
-        {{ todo().description }}
+        Description - {{ todo().description }}
     </div>
     <div class="todo-footer">
         <div class="todo-author">
-            {{ todo().created_by }}
+            Created by {{ todo().owner_metadata.username }}
         </div>
         <div class="todo-creation_date">
             {{ todo().created_at | date }}

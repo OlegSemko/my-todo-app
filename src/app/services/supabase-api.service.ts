@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { from, map } from 'rxjs';
+import { from } from 'rxjs';
 import { SupabaseService } from './supabase.service';
 
 @Injectable({ providedIn: 'root' })
@@ -9,38 +9,30 @@ export class SupabaseApiService {
   getUserBoards(userId: string | undefined) {
     const promise = this.supabase.client
     .from('boards_with_owner')
-  .select('*');
-      // .from('boards')
-      // .select(`
-      //   id,
-      //   title,
-      //   owner_id,
-      //   board_members(user_id)
-      // `)
-      // .eq('board_members.user_id', userId);
-      // .or(`owner_id.eq.${userId},board_members.user_id.eq.${userId}`);
+    .select('*');
+
+    return from(promise);
+  }
+
+  getBoardsWithMembers(userId: string | undefined) {
+    const promise = this.supabase.client
+    .from('boards_with_members')
+    .select('*')
+    .or(`owner_id.eq.${userId},members->>id.eq.${userId}`);
 
     return from(promise);
   }
 
   getBoardTodos(boardId: number) {
     const promise = this.supabase.client
-    .from('tasks')
-  .select('*');
-      // .from('boards')
-      // .select(`
-      //   id,
-      //   title,
-      //   owner_id,
-      //   board_members(user_id)
-      // `)
-      // .eq('board_members.user_id', userId);
-      // .or(`owner_id.eq.${userId},board_members.user_id.eq.${userId}`);
+    .from('tasks_with_owner')
+    .select('*')
+    .eq('board_id', boardId);
 
     return from(promise);
   }
 
-  addTodo(userId: string, title: string, description: string) {
+  addTodo(userId: string, boardId: number, title: string, description: string) {
     const promise = this.supabase.client
       .from('tasks')
       .insert([
@@ -48,10 +40,14 @@ export class SupabaseApiService {
           title,
           description,
           created_by: userId,
+          board_id: boardId,
         },
       ])
       .select();
 
     return from(promise);
   }
+
+  // insert into board_members (board_id, user_id, role) values (...);
+  // delete from board_members where board_id = ... and user_id = ...;
 }

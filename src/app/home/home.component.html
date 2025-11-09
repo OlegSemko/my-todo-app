@@ -1,3 +1,7 @@
-@for (item of boards(); track item.id) {
-    <app-board [board]="item" (click)="goToBoard(item.id)"></app-board>
+@if (isLoading()) {
+    Loading...
+} @else {
+    @for (item of boards(); track item.id) {
+        <app-board [board]="item" (click)="goToBoard(item.id)"></app-board>
+    }
 }

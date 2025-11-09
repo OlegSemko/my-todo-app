@@ -1,6 +1,6 @@
 import { DatePipe } from "@angular/common";
 import { ChangeDetectionStrategy, Component, input, InputSignal } from "@angular/core";
-import { IBoard } from "../../intrefaces";
+import { IMemberBoard } from "../../intrefaces";
 
 
 @Component({
@@ -12,5 +12,5 @@ import { IBoard } from "../../intrefaces";
 })
 
 export class BoardComponent {
-    readonly board: InputSignal<IBoard> = input.required<IBoard>();
+    readonly board: InputSignal<IMemberBoard> = input.required<IMemberBoard>();
 }

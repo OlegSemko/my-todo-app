@@ -4,8 +4,8 @@ import { IToDo } from "../../intrefaces";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
-import { DatePipe } from "@angular/common";
 import { TodoItemComponent } from "../todo-item/todo-item.component";
+import { finalize } from "rxjs/operators";
 
 @Component({
     selector: 'app-board-details',
@@ -20,8 +20,8 @@ export class BoardDetailsComponent implements OnInit {
     private fb = inject(FormBuilder);
     private route = inject(ActivatedRoute);
     private authService = inject(AuthService);
-    // http = inject(HttpClient);
     readonly todos: WritableSignal<IToDo[]> = signal<IToDo[]>([]);
+    readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
     private boardId: number = 0;
 
@@ -31,33 +31,35 @@ export class BoardDetailsComponent implements OnInit {
     });
 
     ngOnInit(): void {
-        this.getUsersBoards();
         this.boardId = +this.route.snapshot.paramMap.get('id')!;
+        this.getUsersTodos();
     }
 
     onSubmit(): void {
         const currentUser = this.authService.currentUser();
         const { todoTitle, todoDescription } = this.todoCreateForm.getRawValue();
 
-        this.supabaseAliService.addTodo(currentUser?.id as string, todoTitle, todoDescription).subscribe((result) => {
+        this.supabaseAliService.addTodo(currentUser?.id as string, this.boardId, todoTitle, todoDescription).subscribe((result) => {
             if (result.error) {
                 console.log('error',result.error?.message);
             } else {
                 console.log('success', result);
-                // this.todos.set(result.data);
-                this.getUsersBoards();
+                this.getUsersTodos();
             }
         });
     }
 
-    private getUsersBoards(): void {
-        this.supabaseAliService.getBoardTodos(this.boardId).subscribe((result) => {
-            if (result.error) {
-                console.log('error',result.error?.message);
-            } else {
-                console.log('success', result);
-                this.todos.set(result.data);
-            }
+    private getUsersTodos(): void {
+        this.isLoading.set(true);
+        this.supabaseAliService.getBoardTodos(this.boardId)
+            .pipe(finalize((() => this.isLoading.set(false))))
+            .subscribe((result) => {
+                if (result.error) {
+                    console.log('error',result.error?.message);
+                } else {
+                    console.log('success', result);
+                    this.todos.set(result.data);
+                }
         })
     }
 }

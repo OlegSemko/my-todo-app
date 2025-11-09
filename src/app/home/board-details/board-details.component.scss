@@ -1,7 +1,5 @@
 :host {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: block;
     padding: 12px;
     background-color: #999999;
 }
@@ -9,4 +7,12 @@
 .control {
     display: flex;
     flex-direction: column;
+}
+
+.todo-list {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
 }

@@ -17,9 +17,13 @@
     </div>
 </div>
 <div class="todo-list">
-    @if (todos().length) {
+    @if (isLoading()) {
+        Loading...
+    } @else if (todos().length) {
         @for (todo of todos(); track todo.id) {
             <app-todo-item [todo]="todo"></app-todo-item>
         }
+    } @else {
+        No tasks found.
     }
 </div>

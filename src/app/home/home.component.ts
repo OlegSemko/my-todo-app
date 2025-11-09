@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal, WritableSignal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, effect, inject, signal, WritableSignal } from "@angular/core";
 import { SupabaseApiService } from "../services/supabase-api.service";
 import { AuthService } from "../services/auth.service";
 import { BoardComponent } from "./board/board.component";
-import { IBoard } from "../intrefaces";
+import { IMemberBoard } from "../intrefaces";
 import { Router } from "@angular/router";
+import { finalize } from "rxjs/operators";
 
 @Component({
     selector: 'app-home',
@@ -13,31 +14,36 @@ import { Router } from "@angular/router";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent {
     supabaseAliService = inject(SupabaseApiService);
     authService = inject(AuthService);
-    readonly boards: WritableSignal<IBoard[]> = signal<IBoard[]>([]);
+    readonly boards: WritableSignal<IMemberBoard[]> = signal<IMemberBoard[]>([]);
+    readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
-    constructor(private router: Router) {}
+    constructor(private router: Router) {
+        effect(() => {
+            const currentUser = this.authService.currentUser();
 
-    ngOnInit(): void {
-        this.getUsersBoards();
+            !!currentUser && this.getUsersBoards(currentUser?.id);
+        })
     }
-    
+
     goToBoard(id: number) {
         this.router.navigate(['/boards', id]);
     }
 
-    private getUsersBoards(): void {
-        const currentUser = this.authService.currentUser();
-        
-        this.supabaseAliService.getUserBoards(currentUser?.id).subscribe((result) => {
-            if (result.error) {
-                console.log('error',result.error?.message);
-            } else {
-                console.log('success', result);
-                this.boards.set(result.data);
-            }
-        });
+    private getUsersBoards(currentUserId: string | undefined): void {   
+        this.isLoading.set(true);
+     
+        this.supabaseAliService.getBoardsWithMembers(currentUserId)
+            .pipe(finalize(() => this.isLoading.set(false)))
+            .subscribe((result) => {
+                if (result.error) {
+                    console.log('error',result.error?.message);
+                } else {
+                    console.log('success', result);
+                    this.boards.set(result.data);
+                }
+            });
     }
 }
