@@ -3,7 +3,14 @@
         {{ board().created_at | date }}
     </div>
     <div class="board-body">
-        {{ board().title }}
+        <div class="title">
+            {{ board().title }}
+        </div>
+        <div class="members">
+            @for (member of board().members; track member.id) {
+                <div class="member">{{ member.metadata.username }}</div>
+            }
+        </div>
     </div>
     <div class="board-footer">
         <span>

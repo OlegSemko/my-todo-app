@@ -27,3 +27,13 @@
         No tasks found.
     }
 </div>
+
+<div class="members">
+    Add a member
+    @for (member of members(); track member.id) {
+        <div class="member"
+          (click)="addUserToBoard(member.id)">
+          {{ member.email }}
+        </div>
+    }
+</div>

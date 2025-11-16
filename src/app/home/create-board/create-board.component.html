@@ -1,0 +1,14 @@
+<div class="create-form-block">
+    <div class="form-title">
+        Create Board
+    </div>
+    <div [formGroup]="boardCreateForm" class="form-container">
+        <div class="control">
+            <label for="title">Board Title:</label>
+            <input formControlName=boardTitle type="text" class="board-title" id="title">
+        </div>
+        <div class="control">
+            <input type="submit" value="Create Board" (click)="onSubmit()">
+        </div>
+    </div>
+</div>

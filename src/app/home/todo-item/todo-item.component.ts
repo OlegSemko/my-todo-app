@@ -15,7 +15,7 @@ import { switchMap } from "rxjs/operators";
 })
 
 export class TodoItemComponent {
-    private supabaseAliService = inject(SupabaseApiService);
+    private supabaseApiService = inject(SupabaseApiService);
     readonly todo: InputSignal<IToDo> = input.required<IToDo>();
     readonly status = new FormControl();
 
@@ -23,7 +23,7 @@ export class TodoItemComponent {
         this.status.setValue(this.todo().status, { emitEvent: false });
         this.status.valueChanges
             .pipe(
-                switchMap((status: string | null) => this.supabaseAliService.updateTodo(this.todo().id, { status }))
+                switchMap((status: string | null) => this.supabaseApiService.updateTodo(this.todo().id, { status }))
             )
             .subscribe((result) => {
                 if (result.error) {
@@ -36,7 +36,7 @@ export class TodoItemComponent {
 
     deleteItem(): void {
         console.log('delete');
-        this.supabaseAliService.deleteTodo(this.todo().id)
+        this.supabaseApiService.deleteTodo(this.todo().id)
             .subscribe((result) => {
                 if (result.error) {
                     console.log('error',result.error?.message);

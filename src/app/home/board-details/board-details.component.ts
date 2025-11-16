@@ -16,12 +16,13 @@ import { finalize } from "rxjs/operators";
 })
 
 export class BoardDetailsComponent implements OnInit {
-    private supabaseAliService = inject(SupabaseApiService);
+    private supabaseApiService = inject(SupabaseApiService);
     private fb = inject(FormBuilder);
     private route = inject(ActivatedRoute);
     private authService = inject(AuthService);
     readonly todos: WritableSignal<IToDo[]> = signal<IToDo[]>([]);
     readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
+    readonly members: WritableSignal<any[]> = signal<any[]>([]);
 
     private boardId: number = 0;
 
@@ -33,13 +34,14 @@ export class BoardDetailsComponent implements OnInit {
     ngOnInit(): void {
         this.boardId = +this.route.snapshot.paramMap.get('id')!;
         this.getUsersTodos();
+        this.getAllUsers();
     }
 
     onSubmit(): void {
         const currentUser = this.authService.currentUser();
         const { todoTitle, todoDescription } = this.todoCreateForm.getRawValue();
 
-        this.supabaseAliService.addTodo(currentUser?.id as string, this.boardId, todoTitle, todoDescription).subscribe((result) => {
+        this.supabaseApiService.addTodo(currentUser?.id as string, this.boardId, todoTitle, todoDescription).subscribe((result) => {
             if (result.error) {
                 console.log('error',result.error?.message);
             } else {
@@ -49,9 +51,21 @@ export class BoardDetailsComponent implements OnInit {
         });
     }
 
+    addUserToBoard(userId: string): void {
+        this.supabaseApiService.addUserToBoard(this.boardId, userId)
+        .subscribe((result) => {
+            if (result.error) {
+                console.log('error',result.error?.message);
+            } else {
+                console.log('success', result);
+                // this.getUsersTodos();
+            }
+        })
+    }
+
     private getUsersTodos(): void {
         this.isLoading.set(true);
-        this.supabaseAliService.getBoardTodos(this.boardId)
+        this.supabaseApiService.getBoardTodos(this.boardId)
             .pipe(finalize((() => this.isLoading.set(false))))
             .subscribe((result) => {
                 if (result.error) {
@@ -61,5 +75,17 @@ export class BoardDetailsComponent implements OnInit {
                     this.todos.set(result.data);
                 }
         })
+    }
+
+    private getAllUsers(): void {
+        this.supabaseApiService.getAllUsers()
+            .subscribe((result: any) => {
+                if (result.error) {
+                    console.log('error',result.error?.message);
+                } else {
+                    console.log('success', result);
+                    this.members.set(result.data);
+                }
+            })
     }
 }

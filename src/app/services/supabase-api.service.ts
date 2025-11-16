@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { from } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { SupabaseService } from './supabase.service';
 import { IToDo } from '../intrefaces';
 
@@ -9,26 +9,42 @@ export class SupabaseApiService {
 
   getUserBoards(userId: string | undefined) {
     const promise = this.supabase.client
-    .from('boards_with_owner')
-    .select('*');
+      .from('boards_with_owner')
+      .select('*');
 
     return from(promise);
   }
 
   getBoardsWithMembers(userId: string | undefined) {
     const promise = this.supabase.client
-    .from('boards_with_members')
-    .select('*')
-    .or(`owner_id.eq.${userId},members->>id.eq.${userId}`);
+      .from('boards_with_members')
+      .select('*')
+  //     .or(`owner_id.eq.${userId}`)
+  // .contains('members', [{ id: userId }]);
+      // .or(`owner_id.eq.${userId},members->>id.eq.${userId}`); // works but not returns members
 
     return from(promise);
   }
 
   getBoardTodos(boardId: number) {
     const promise = this.supabase.client
-    .from('tasks_with_owner')
-    .select('*')
-    .eq('board_id', boardId);
+      .from('tasks_with_owner')
+      .select('*')
+      .eq('board_id', boardId);
+
+    return from(promise);
+  }
+
+  addBoard(userId: string, title: string) {
+    const promise = this.supabase.client
+      .from('boards')
+      .insert([
+        {
+          title,
+          owner_id: userId,
+        },
+      ])
+      .select();
 
     return from(promise);
   }
@@ -64,6 +80,28 @@ export class SupabaseApiService {
       .from('tasks')
       .delete()
       .eq('id', taskId);
+
+    return from(promise);
+  }
+
+  addUserToBoard(boardId: number, userId: string) {
+    const promise = this.supabase.client
+      .from('board_members')
+      .insert([
+        {
+          board_id: boardId,
+          user_id: userId,
+        },
+      ])
+      .select();
+
+    return from(promise);
+  }
+
+  getAllUsers(): Observable<any> {
+    const promise = this.supabase.client
+      .from('user_profiles')
+      .select('*');
 
     return from(promise);
   }
