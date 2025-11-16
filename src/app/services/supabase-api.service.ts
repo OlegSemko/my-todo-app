@@ -15,6 +15,16 @@ export class SupabaseApiService {
     return from(promise);
   }
 
+  getBoardDetails(boardId: number) {
+    const promise = this.supabase.client
+      .from('boards_with_members')
+      .select('*')
+      .eq('id', boardId)
+      .single();
+
+    return from(promise);
+  }
+
   getBoardsWithMembers() {
     const promise = this.supabase.client
       .from('boards_with_members')

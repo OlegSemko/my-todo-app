@@ -1,24 +1,24 @@
 <div class="board">
-    <div class="board-header">
+    <!-- <div class="board-header">
         {{ board().created_at | date }}
-    </div>
+    </div> -->
     <div class="board-body">
         <div class="title">
             {{ board().title }}
         </div>
-        <div class="members">
+        <!-- <div class="members">
             @for (member of board().members; track member.id) {
                 <div class="member">{{ member.metadata.username }}</div>
             }
-        </div>
+        </div> -->
     </div>
-    <div class="board-footer">
+    <!-- <div class="board-footer">
         <span>
             {{ board().owner.metadata.username }}
         </span>
         <span>
             {{ board().owner.email }}
         </span>
-    </div>
+    </div> -->
 </div>
 

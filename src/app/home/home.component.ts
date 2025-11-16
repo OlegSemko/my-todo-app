@@ -30,7 +30,7 @@ export class HomeComponent {
     }
 
     goToBoard(id: number) {
-        this.router.navigate(['/boards', id]);
+        this.router.navigate(['/boards', id], { state: { board: this.boards().find((board: IMemberBoard) => board.id === id)} });
     }
 
     private getUsersBoards(): void {   
