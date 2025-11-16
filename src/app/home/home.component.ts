@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, effect, inject, signal, WritableSig
 import { SupabaseApiService } from "../services/supabase-api.service";
 import { AuthService } from "../services/auth.service";
 import { BoardComponent } from "./board/board.component";
-import { IMemberBoard } from "../intrefaces";
+import { IMemberBoard, IUser } from "../intrefaces";
 import { Router, RouterModule } from "@angular/router";
-import { finalize } from "rxjs/operators";
+import { finalize, map } from "rxjs/operators";
 
 @Component({
     selector: 'app-home',
@@ -20,11 +20,12 @@ export class HomeComponent {
     readonly boards: WritableSignal<IMemberBoard[]> = signal<IMemberBoard[]>([]);
     readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
+    private currentUser: { id: string | undefined; email: string; username: string; } | null | undefined;
     constructor(private router: Router) {
         effect(() => {
-            const currentUser = this.authService.currentUser();
+            this.currentUser = this.authService.currentUser();
 
-            !!currentUser && this.getUsersBoards(currentUser?.id);
+            !!this.currentUser && this.getUsersBoards();
         })
     }
 
@@ -32,18 +33,27 @@ export class HomeComponent {
         this.router.navigate(['/boards', id]);
     }
 
-    private getUsersBoards(currentUserId: string | undefined): void {   
+    private getUsersBoards(): void {   
         this.isLoading.set(true);
      
-        this.supabaseApiService.getBoardsWithMembers(currentUserId)
-            .pipe(finalize(() => this.isLoading.set(false)))
+        this.supabaseApiService.getBoardsWithMembers()
+            .pipe(
+                finalize(() => this.isLoading.set(false)),
+                map((res) => {
+                        if (res.error) {
+                        console.log('error',res.error?.message);
+                        return [];
+                    } else {
+                        const userId = this.currentUser?.id;
+                        const usersBoards = res.data?.filter((board: IMemberBoard) => board.owner_id === userId || board.members.some((member: IUser) => member.id === userId));
+
+                        return usersBoards as IMemberBoard[];
+                    }
+                })
+            )
             .subscribe((result) => {
-                if (result.error) {
-                    console.log('error',result.error?.message);
-                } else {
-                    console.log('success', result);
-                    this.boards.set(result.data);
-                }
+                console.log('success', result);
+                this.boards.set(result);
             });
     }
 }

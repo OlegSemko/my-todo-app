@@ -21,3 +21,17 @@
 .member {
     cursor: pointer;
 }
+
+.create-task-btn {
+    background-color: lightgray;
+    display: inline-block;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all ease .5s;
+
+    &:hover {
+        background-color: darkgray;
+    }
+}

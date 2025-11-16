@@ -1,9 +1,10 @@
 @if (isLoading()) {
     Loading...
 } @else {
-    @for (item of boards(); track item.id) {
-        <app-board [board]="item" (click)="goToBoard(item.id)"></app-board>
-    }
+    <div class="create-board-btn" routerLink="/create-board">Create Board</div>
+    <div class="boards-container">
+        @for (item of boards(); track item.id) {
+            <app-board [board]="item" (click)="goToBoard(item.id)"></app-board>
+        }
+    </div>
 }
-
-<div class="create-board-btn" routerLink="/create-board" routerLinkActive="active">Create Board</div>

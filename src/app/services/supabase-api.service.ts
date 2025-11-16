@@ -15,7 +15,7 @@ export class SupabaseApiService {
     return from(promise);
   }
 
-  getBoardsWithMembers(userId: string | undefined) {
+  getBoardsWithMembers() {
     const promise = this.supabase.client
       .from('boards_with_members')
       .select('*')

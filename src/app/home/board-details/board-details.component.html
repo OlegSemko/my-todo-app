@@ -1,21 +1,18 @@
-<div class="create-form-block">
-    <div class="form-title">
-        Create ToDo
+<div class="create-task-btn" (click)="handleCreateTask()">Create Task</div>
+
+<div class="members">
+    Add a member
+    <div class="member-select">
+        <label for="member-select">Member:</label>
+        <select name="member" id="member-select" (change)="addUserToBoard($event)">
+            @for (member of members(); track member.id) {
+                <option value="{{ member.id }}">{{ member.email }}</option>
+            }
+        </select>
     </div>
-    <div [formGroup]="todoCreateForm" class="form-container">
-        <div class="control">
-            <label for="title">Task Title:</label>
-            <input formControlName=todoTitle type="text" class="todo-title" id="title">
-        </div>
-        <div class="control">
-            <label for="description">Task Description:</label>
-            <textarea formControlName=todoDescription type="text" class="todo-description" id="description"></textarea>
-        </div>
-        <div class="control">
-            <input type="submit" value="Create Task" (click)="onSubmit()">
-        </div>
-    </div>
+    
 </div>
+
 <div class="todo-list">
     @if (isLoading()) {
         Loading...
@@ -25,15 +22,5 @@
         }
     } @else {
         No tasks found.
-    }
-</div>
-
-<div class="members">
-    Add a member
-    @for (member of members(); track member.id) {
-        <div class="member"
-          (click)="addUserToBoard(member.id)">
-          {{ member.email }}
-        </div>
     }
 </div>

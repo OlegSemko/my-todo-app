@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal, WritableSignal } from "@angular/core";
 import { SupabaseApiService } from "../../services/supabase-api.service";
-import { IToDo } from "../../intrefaces";
-import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { AuthService } from "../../services/auth.service";
+import { IToDo, IUser } from "../../intrefaces";
+import { ReactiveFormsModule } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TodoItemComponent } from "../todo-item/todo-item.component";
 import { finalize } from "rxjs/operators";
 
@@ -17,19 +16,13 @@ import { finalize } from "rxjs/operators";
 
 export class BoardDetailsComponent implements OnInit {
     private supabaseApiService = inject(SupabaseApiService);
-    private fb = inject(FormBuilder);
     private route = inject(ActivatedRoute);
-    private authService = inject(AuthService);
+    private router = inject(Router);
     readonly todos: WritableSignal<IToDo[]> = signal<IToDo[]>([]);
     readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
-    readonly members: WritableSignal<any[]> = signal<any[]>([]);
+    readonly members: WritableSignal<any[]> = signal<IUser[]>([]);
 
     private boardId: number = 0;
-
-    todoCreateForm = this.fb.nonNullable.group({
-        todoTitle: ['', Validators.required],
-        todoDescription: ['', Validators.required]
-    });
 
     ngOnInit(): void {
         this.boardId = +this.route.snapshot.paramMap.get('id')!;
@@ -37,30 +30,20 @@ export class BoardDetailsComponent implements OnInit {
         this.getAllUsers();
     }
 
-    onSubmit(): void {
-        const currentUser = this.authService.currentUser();
-        const { todoTitle, todoDescription } = this.todoCreateForm.getRawValue();
-
-        this.supabaseApiService.addTodo(currentUser?.id as string, this.boardId, todoTitle, todoDescription).subscribe((result) => {
-            if (result.error) {
-                console.log('error',result.error?.message);
-            } else {
-                console.log('success', result);
-                this.getUsersTodos();
-            }
-        });
-    }
-
-    addUserToBoard(userId: string): void {
-        this.supabaseApiService.addUserToBoard(this.boardId, userId)
+    addUserToBoard(event: Event): void {
+        console.log('event', event);
+        this.supabaseApiService.addUserToBoard(this.boardId, (event.target as HTMLSelectElement).value)
         .subscribe((result) => {
             if (result.error) {
                 console.log('error',result.error?.message);
             } else {
                 console.log('success', result);
-                // this.getUsersTodos();
             }
         })
+    }
+
+    handleCreateTask(): void {
+        this.router.navigate(['/boards', this.boardId, 'create-task']);
     }
 
     private getUsersTodos(): void {
