@@ -1,28 +1,16 @@
 {
   "name": "my-todo-app",
   "version": "0.1.0",
-  "engines": {
-    "node": "20.x"
-  },
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
+    "ng": "npx ng",
+    "start": "npx ng serve",
     "prebuild": "node tools/generate-env.js",
     "build": "npx ng build --configuration=production",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "watch": "npx ng build --watch --configuration development",
+    "test": "npx ng test"
   },
-  "prettier": {
-    "printWidth": 100,
-    "singleQuote": true,
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "parser": "angular"
-        }
-      }
-    ]
+  "engines": {
+    "node": "20.x"
   },
   "private": true,
   "dependencies": {
