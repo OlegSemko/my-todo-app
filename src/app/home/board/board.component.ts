@@ -1,4 +1,3 @@
-import { DatePipe } from "@angular/common";
 import { ChangeDetectionStrategy, Component, input, InputSignal } from "@angular/core";
 import { IMemberBoard } from "../../intrefaces";
 
@@ -7,7 +6,6 @@ import { IMemberBoard } from "../../intrefaces";
     selector: 'app-board',
     templateUrl: './board.component.html',
     styleUrl: './board.component.scss',
-    imports: [DatePipe],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
