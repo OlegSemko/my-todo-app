@@ -1,10 +1,12 @@
-const { writeFileSync } = require('fs');
+const { writeFileSync, mkdirSync } = require('fs');
+
+mkdirSync('./src/environments', { recursive: true });
 
 const file = `
 export const environment = {
   production: ${process.env.NODE_ENV === 'production'},
   supabaseUrl: "${process.env.SUPABASE_URL}",
-  supabaseAnonKey: "${process.env.SUPABASE_ANON_KEY}"
+  supabaseKey: "${process.env.SUPABASE_KEY}"
 };
 `;
 
