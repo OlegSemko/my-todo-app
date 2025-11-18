@@ -2,10 +2,9 @@
   "name": "my-todo-app",
   "version": "0.1.0",
   "scripts": {
-    "ng": "npx ng",
     "start": "npx ng serve",
     "prebuild": "node tools/generate-env.js",
-    "build": "npx ng build --configuration=production",
+    "build": "./node-modules/.bin/ng build --configuration=production",
     "watch": "npx ng build --watch --configuration development",
     "test": "npx ng test"
   },
