@@ -1,11 +1,14 @@
 {
   "name": "my-todo-app",
   "version": "0.1.0",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "prebuild": "node tools/generate-env.js",
-    "build": "npx ng build",
+    "build": "npx ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
