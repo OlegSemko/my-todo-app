@@ -34,8 +34,15 @@ export class BoardDetailsComponent implements OnInit {
         this.getAllUsers();
     }
 
-    addUserToBoard(event: Event): void {
-        this.supabaseApiService.addUserToBoard(this.boardId, (event.target as HTMLSelectElement).value)
+    addUserToBoard(userEmail: string): void {
+        const matchedUser = this.members().find((member: IUser) => member.email === userEmail);
+
+        if (!matchedUser) {
+            alert(`The user with e-mail: ${userEmail} is not found`);
+            return;
+        }
+
+        this.supabaseApiService.addUserToBoard(this.boardId, matchedUser.id)
         .subscribe((result) => {
             if (result.error) {
                 console.log('error',result.error?.message);

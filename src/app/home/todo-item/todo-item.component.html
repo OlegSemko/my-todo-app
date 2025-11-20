@@ -13,6 +13,20 @@
             <option value="done">Done</option>
         </select>
     </div>
+    <div class="todo-priority">
+        <label for="priority-select">Task priority:</label>
+        <select [formControl]="priority" name="priority" id="priority-select">
+            <option value="1">Low</option>
+            <option value="2">Normal</option>
+            <option value="3">High</option>
+            <option value="4">Highest</option>
+        </select>
+    </div>
+    <div class="todo-due-date">
+        <label for="dueDate">Due Date:</label>
+        <input [formControl]="dueDate" type="date" id="dueDate" name="dueDate">
+    </div>
+
     <div class="todo-footer">
         <div class="todo-author">
             Created by {{ todo().owner_metadata.username }}
