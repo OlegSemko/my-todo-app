@@ -43,4 +43,6 @@ export interface IToDo {
   owner_email: string;
   owner_metadata: IUserMetaData;
   status: string | null;
+  priority: number;
+  due_date: string;
 }
