@@ -43,7 +43,7 @@
         Loading...
     } @else if (todos().length) {
         @for (todo of todos(); track todo.id) {
-            <app-todo-item [todo]="todo"></app-todo-item>
+            <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
         }
     } @else {
         No tasks found.
