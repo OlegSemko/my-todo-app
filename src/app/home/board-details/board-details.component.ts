@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal, WritableSignal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, Signal, signal, WritableSignal } from "@angular/core";
 import { SupabaseApiService } from "../../services/supabase-api.service";
 import { IMemberBoard, IToDo, IUser } from "../../intrefaces";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -22,6 +22,17 @@ export class BoardDetailsComponent implements OnInit {
     readonly todos: WritableSignal<IToDo[]> = signal<IToDo[]>([]);
     readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
     readonly members: WritableSignal<IUser[]> = signal<IUser[]>([]);
+    readonly toDoStatusTasks: Signal<IToDo[]> = computed(() => {
+        return this.todos().filter((todo: IToDo) => todo.status === 'to-do').sort((a: IToDo, b: IToDo) => b.priority - a.priority)
+    });
+
+    readonly inProgressStatusTasks: Signal<IToDo[]> = computed(() => {
+        return this.todos().filter((todo: IToDo) => todo.status === 'in-progress').sort((a: IToDo, b: IToDo) => b.priority - a.priority)
+    });
+
+    readonly doneStatusTasks: Signal<IToDo[]> = computed(() => {
+        return this.todos().filter((todo: IToDo) => todo.status === 'done').sort((a: IToDo, b: IToDo) => b.priority - a.priority)
+    });
 
     readonly board: WritableSignal<IMemberBoard | undefined> = signal<IMemberBoard | undefined>(undefined);
 

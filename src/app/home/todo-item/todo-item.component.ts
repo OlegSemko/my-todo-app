@@ -74,6 +74,7 @@ export class TodoItemComponent {
                     console.log('error',result.error?.message);
                 } else {
                     console.log('success', result);
+                    // emit event to reload todos
                 }
             });
     }
