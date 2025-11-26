@@ -1,41 +1,47 @@
-<div class="create-task-btn" (click)="handleCreateTask()">Create Task</div>
+<div class="create-task-btn" (click)="handleCreateTask()">Create New Task</div>
 
 <div class="board-details">
-    <div class="board-header">
-        {{ board()?.created_at | date }}
+    <div class="board-details-title">
+        {{ board()?.title }}
     </div>
-    <div class="board-body">
-        <div class="title">
-            {{ board()?.title }}
+    <div class="board-details-body">
+        <div class="board-info">
+            <span>
+                Created by: {{ board()?.owner?.metadata?.username }}
+            </span>
+            <span>
+                {{ board()?.owner?.email }}
+            </span>
+            <div class="board-header">
+                Created at: {{ board()?.created_at | date }}
+            </div>
         </div>
+
         <div class="members">
-            @for (member of board()?.members; track member.id) {
-                <div class="member">{{ member.metadata.username }}</div>
-            }
-        </div>
-    </div>
-    <div class="board-footer">
-        <span>
-            {{ board()?.owner?.metadata?.username }}
-        </span>
-        <span>
-            {{ board()?.owner?.email }}
-        </span>
-    </div>
-
-
-    <div class="members">
-        Add a member
-        <div class="member-select">
-            <div class="control">
-                <label for="member-select">Enter the member e-mail you wish to add:</label>
-                <input #memberEmail name="member" id="member-select">
+            <div class="members-title">Board members:</div>
+            <div class="members-list">
+                @for (member of board()?.members; track member.id) {
+                    <span class="member">{{ member.metadata.username }}</span><span>, </span>
+                }
             </div>
-            <div class="control">
-                <input type="submit" value="Add a member" (click)="addUserToBoard(memberEmail.value)">
+
+            <div class="add-members">
+                Add a member
+                <div class="member-select">
+                    <div class="control">
+                        <label for="member-select">Enter the member e-mail you wish to add:</label>
+                        <input #memberEmail name="member" id="member-select">
+                    </div>
+                    <div class="control">
+                        <input class="add-user-button" type="submit" value="Add a member" (click)="addUserToBoard(memberEmail.value)">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+
+    
 </div>
 
 <div class="blocks-container">
@@ -49,7 +55,9 @@
                 }
             </div>
         } @else {
-            No tasks found.
+            <div class="todo-list todo-status">
+                No tasks found.
+            </div>
         }
         @if (inProgressStatusTasks().length) {
             <div class="todo-list inprogress-status">
@@ -58,7 +66,9 @@
                 }
             </div>
         } @else {
-            No tasks found.
+            <div class="todo-list inprogress-status">
+                No tasks found.
+            </div>
         }
         @if (doneStatusTasks().length) {
             <div class="todo-list done-status">
@@ -67,7 +77,9 @@
                 }
             </div>
         } @else {
-            No tasks found.
+            <div class="todo-list done-status">
+                No tasks found.
+            </div>
         }
     }
 </div>
