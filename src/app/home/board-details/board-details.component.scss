@@ -10,12 +10,34 @@
     flex-direction: column;
 }
 
+.blocks-container {
+    display: flex;
+    gap: 12px;
+}
+
 .todo-list {
     display: flex;
     gap: 8px;
     flex-direction: column;
     align-content: center;
     align-items: center;
+    flex: 1 1;
+    padding: 8px;
+    border: 1px solid yellow;
+    border-radius: 4px;
+    height: fit-content;
+}
+
+.todo-status {
+    background-color: lemonchiffon;
+}
+
+.inprogress-status {
+    background-color: lightgreen;
+}
+
+.done-status {
+    background-color: lightblue;
 }
 
 .member {

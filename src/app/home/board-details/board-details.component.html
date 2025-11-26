@@ -38,14 +38,36 @@
     </div>
 </div>
 
-<div class="todo-list">
+<div class="blocks-container">
     @if (isLoading()) {
         Loading...
-    } @else if (todos().length) {
-        @for (todo of todos(); track todo.id) {
-            <app-todo-item [todo]="todo"></app-todo-item>
-        }
     } @else {
-        No tasks found.
+        @if (toDoStatusTasks().length) {
+            <div class="todo-list todo-status">
+                @for (todo of toDoStatusTasks(); track todo.id) {
+                    <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
+                }
+            </div>
+        } @else {
+            No tasks found.
+        }
+        @if (inProgressStatusTasks().length) {
+            <div class="todo-list inprogress-status">
+                @for (todo of inProgressStatusTasks(); track todo.id) {
+                    <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
+                }
+            </div>
+        } @else {
+            No tasks found.
+        }
+        @if (doneStatusTasks().length) {
+            <div class="todo-list done-status">
+                @for (todo of doneStatusTasks(); track todo.id) {
+                    <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
+                }
+            </div>
+        } @else {
+            No tasks found.
+        }
     }
 </div>

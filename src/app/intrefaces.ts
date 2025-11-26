@@ -42,6 +42,9 @@ export interface IToDo {
   created_at: string;
   owner_email: string;
   owner_metadata: IUserMetaData;
+  assignee_metadata: IUserMetaData;
+  assignee_id: string;
+  assignee_email: string;
   status: string | null;
   priority: number;
   due_date: string;

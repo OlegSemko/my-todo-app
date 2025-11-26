@@ -1,39 +1,57 @@
-<div class="todo-item">
-    <div class="todo-title">
-        Title - {{ todo().title }}
+<div class="todo-item" [class.collapsed]="!isExpanded">
+    <div class="todo-header">
+        <div class="todo-title">
+            {{ todo().title }}
+        </div>
+        <div class="expand_btn" (click)="expand()">
+            {{isExpanded ? 'Collapse' : 'Expand'}}
+        </div>
     </div>
-    <div class="todo-description">
-        Description - {{ todo().description }}
-    </div>
-    <div class="todo-status">
-        <label for="status-select">Task status:</label>
-        <select [formControl]="status" name="status" id="status-select">
-            <option value="to-do">To do</option>
-            <option value="in-progress">In progress</option>
-            <option value="done">Done</option>
-        </select>
-    </div>
-    <div class="todo-priority">
-        <label for="priority-select">Task priority:</label>
-        <select [formControl]="priority" name="priority" id="priority-select">
-            <option value="1">Low</option>
-            <option value="2">Normal</option>
-            <option value="3">High</option>
-            <option value="4">Highest</option>
-        </select>
-    </div>
-    <div class="todo-due-date">
-        <label for="dueDate">Due Date:</label>
-        <input [formControl]="dueDate" type="date" id="dueDate" name="dueDate">
-    </div>
+    <div class="todo-body">
+        <div class="todo-details">
+            <div class="todo-status">
+                <label for="status-select">Task status:</label>
+                <select [formControl]="status" name="status" id="status-select">
+                    <option value="to-do">To do</option>
+                    <option value="in-progress">In progress</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
+            <div class="todo-priority">
+                <label for="priority-select">Task priority:</label>
+                <select [formControl]="priority" name="priority" id="priority-select">
+                    <option value="1">Low</option>
+                    <option value="2">Normal</option>
+                    <option value="3">High</option>
+                    <option value="4">Highest</option>
+                </select>
+            </div>
+            <div class="todo-assignee">
+                <label for="assignee-select">Assignee:</label>
+                <select [formControl]="assignee" name="assignee" id="assignee-select">
+                    @for (member of members(); track member.id) {
+                        <option [value]="member.id">{{ member.metadata.username }}</option>
+                    }
+                </select>
+            </div>
+            <div class="todo-due-date">
+                <label for="dueDate">Due Date:</label>
+                <input [formControl]="dueDate" type="date" id="dueDate" name="dueDate">
+            </div>
+        
+            <div class="todo-footer">
+                <div class="todo-author">
+                    Created by {{ todo().owner_metadata.username }}
+                </div>
+                <div class="todo-creation_date">
+                    {{ todo().created_at | date }}
+                </div>
+            </div>
+            <div class="control" (click)="deleteItem()">Delete</div>
+        </div>
 
-    <div class="todo-footer">
-        <div class="todo-author">
-            Created by {{ todo().owner_metadata.username }}
-        </div>
-        <div class="todo-creation_date">
-            {{ todo().created_at | date }}
+        <div class="todo-description">
+            Description - {{ todo().description }}
         </div>
     </div>
-    <div class="control" (click)="deleteItem()">Delete</div>
 </div>

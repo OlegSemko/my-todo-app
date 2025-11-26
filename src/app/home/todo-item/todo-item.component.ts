@@ -1,9 +1,8 @@
 import { DatePipe } from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from "@angular/core";
-import { IToDo } from "../../intrefaces";
+import { IToDo, IUser } from "../../intrefaces";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { SupabaseApiService } from "../../services/supabase-api.service";
-import { switchMap } from "rxjs/operators";
 
 
 @Component({
@@ -17,14 +16,19 @@ import { switchMap } from "rxjs/operators";
 export class TodoItemComponent {
     private supabaseApiService = inject(SupabaseApiService);
     readonly todo: InputSignal<IToDo> = input.required<IToDo>();
+    readonly members: InputSignal<IUser[] | undefined> = input<IUser[] | undefined>();
     readonly status = new FormControl();
     readonly priority = new FormControl();
     readonly dueDate = new FormControl();
+    readonly assignee = new FormControl();
+
+    isExpanded = false;
 
     ngOnInit(): void {
         this.status.setValue(this.todo().status, { emitEvent: false });
         this.priority.setValue(this.todo().priority, { emitEvent: false });
         this.dueDate.setValue(this.todo().due_date, { emitEvent: false });
+        this.assignee.setValue(this.todo().assignee_id, { emitEvent: false });
 
         this.priority.valueChanges
             .subscribe((priority: number) => {
@@ -40,6 +44,11 @@ export class TodoItemComponent {
             .subscribe((dueDate: string) => {
                 this.updateToDo({due_date: dueDate});
             });
+
+        this.assignee.valueChanges
+            .subscribe((assigneeId: string) => {
+                this.updateToDo({assignee_id: assigneeId});
+            });
     }
 
     deleteItem(): void {
@@ -54,6 +63,10 @@ export class TodoItemComponent {
             });
     }
 
+    expand(): void {
+        this.isExpanded = !this.isExpanded;
+    }
+
     private updateToDo(body: Partial<IToDo>): void {
         this.supabaseApiService.updateTodo(this.todo().id, body)
             .subscribe((result) => {
@@ -61,6 +74,7 @@ export class TodoItemComponent {
                     console.log('error',result.error?.message);
                 } else {
                     console.log('success', result);
+                    // emit event to reload todos
                 }
             });
     }
