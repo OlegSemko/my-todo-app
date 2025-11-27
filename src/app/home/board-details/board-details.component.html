@@ -48,38 +48,35 @@
     @if (isLoading()) {
         Loading...
     } @else {
-        @if (toDoStatusTasks().length) {
-            <div class="todo-list todo-status">
+        <div class="todo-list todo-status">
+            <div class="todo-list-title">To Do</div>
+            @if (toDoStatusTasks().length) {
                 @for (todo of toDoStatusTasks(); track todo.id) {
                     <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
                 }
-            </div>
-        } @else {
-            <div class="todo-list todo-status">
+            } @else {
                 No tasks found.
-            </div>
-        }
-        @if (inProgressStatusTasks().length) {
-            <div class="todo-list inprogress-status">
+            }
+        </div>
+        <div class="todo-list inprogress-status">
+            <div class="todo-list-title">In Progress</div>
+            @if (inProgressStatusTasks().length) {
                 @for (todo of inProgressStatusTasks(); track todo.id) {
                     <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
                 }
-            </div>
-        } @else {
-            <div class="todo-list inprogress-status">
+            } @else {
                 No tasks found.
-            </div>
-        }
-        @if (doneStatusTasks().length) {
-            <div class="todo-list done-status">
+            }
+        </div>
+        <div class="todo-list done-status">
+            <div class="todo-list-title">Done</div>
+            @if (doneStatusTasks().length) {
                 @for (todo of doneStatusTasks(); track todo.id) {
                     <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
                 }
-            </div>
-        } @else {
-            <div class="todo-list done-status">
+            } @else {
                 No tasks found.
-            </div>
-        }
+            }
+        </div>  
     }
 </div>
