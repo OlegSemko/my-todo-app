@@ -1,4 +1,5 @@
 <div [formGroup]="form" class="form">
+    <h2>Login</h2>
     <div class="control">
         <label for="email">Email Address:</label>
         <input formControlName=email type="text" id="email">
@@ -10,6 +11,8 @@
     <div class="control">
         <input type="submit" value="Login" (click)="onSubmit()">
     </div>
+    <p>Don't have an account?</p>
+    <a _ngcontent-ng-c269159490="" routerlink="/auth/login" routerlinkactive="active" class="login-link active" href="/auth/login">Login</a>
 </div>
 
 @if (!!errorMessage()) {
