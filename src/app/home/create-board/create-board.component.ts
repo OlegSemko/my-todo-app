@@ -30,7 +30,6 @@ export class CreateBoardComponent {
             if (result.error) {
                 console.log('error',result.error?.message);
             } else {
-                console.log('success', result);
                 this.router.navigateByUrl('/boards');
             }
         });

@@ -54,13 +54,7 @@ export class TodoItemComponent {
     deleteItem(): void {
         console.log('delete');
         this.supabaseApiService.deleteTodo(this.todo().id)
-            .subscribe((result) => {
-                if (result.error) {
-                    console.log('error',result.error?.message);
-                } else {
-                    console.log('success', result);
-                };
-            });
+            .subscribe();
     }
 
     expand(): void {
@@ -69,13 +63,6 @@ export class TodoItemComponent {
 
     private updateToDo(body: Partial<IToDo>): void {
         this.supabaseApiService.updateTodo(this.todo().id, body)
-            .subscribe((result) => {
-                if (result.error) {
-                    console.log('error',result.error?.message);
-                } else {
-                    console.log('success', result);
-                    // emit event to reload todos
-                }
-            });
+            .subscribe();
     }
 }

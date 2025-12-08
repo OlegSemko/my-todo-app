@@ -41,7 +41,6 @@ export class HomeComponent {
                 finalize(() => this.isLoading.set(false)),
                 map((res) => {
                         if (res.error) {
-                        console.log('error',res.error?.message);
                         return [];
                     } else {
                         const userId = this.currentUser?.id;
@@ -52,7 +51,6 @@ export class HomeComponent {
                 })
             )
             .subscribe((result) => {
-                console.log('success', result);
                 this.boards.set(result);
             });
     }
