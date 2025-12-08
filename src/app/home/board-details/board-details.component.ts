@@ -54,13 +54,7 @@ export class BoardDetailsComponent implements OnInit {
         }
 
         this.supabaseApiService.addUserToBoard(this.boardId, matchedUser.id)
-        .subscribe((result) => {
-            if (result.error) {
-                console.log('error',result.error?.message);
-            } else {
-                console.log('success', result);
-            }
-        })
+        .subscribe()
     }
 
     handleCreateTask(): void {
@@ -75,7 +69,6 @@ export class BoardDetailsComponent implements OnInit {
                 if (result.error) {
                     console.log('error',result.error?.message);
                 } else {
-                    console.log('success', result);
                     this.todos.set(result.data);
                 }
             })
@@ -87,7 +80,6 @@ export class BoardDetailsComponent implements OnInit {
                 if (result.error) {
                     console.log('error',result.error?.message);
                 } else {
-                    console.log('success', result);
                     this.members.set(result.data);
                 }
             })
@@ -100,7 +92,6 @@ export class BoardDetailsComponent implements OnInit {
                 if (result.error) {
                     console.error('error',result.error?.message);
                 } else {
-                    console.log('success', result);
                     this.board.set(result.data);
                 }
             })
