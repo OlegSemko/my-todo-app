@@ -49,3 +49,13 @@ export interface IToDo {
   priority: number;
   due_date: string;
 }
+
+export interface IToDoComment {
+  id: any;
+  task_id: any;
+  user_id: any;
+  comment: string;
+  created_at: string;
+  user_email: string;
+  user_metadata: IUserMetaData;
+}

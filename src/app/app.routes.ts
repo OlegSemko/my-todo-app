@@ -7,6 +7,7 @@ import { NotFoundComponent } from './not-found-page/not-found.component';
 import { BoardDetailsComponent } from './home/board-details/board-details.component';
 import { CreateBoardComponent } from './home/create-board/create-board.component';
 import { CreateTaskComponent } from './home/create-task/create-task.component';
+import { TodoDetailsComponent } from './home/todo-details/todo-details.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/auth', pathMatch: 'full' },
@@ -23,5 +24,6 @@ export const routes: Routes = [
     { path: 'boards/:id', component: BoardDetailsComponent },
     { path: 'boards/:id/create-task', component: CreateTaskComponent },
     { path: 'create-board', component: CreateBoardComponent },
+    { path: 'todo-details', component: TodoDetailsComponent },
     { path: '**', component: NotFoundComponent }
 ];

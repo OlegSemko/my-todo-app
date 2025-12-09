@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from "
 import { IToDo, IUser } from "../../intrefaces";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { SupabaseApiService } from "../../services/supabase-api.service";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -14,6 +15,7 @@ import { SupabaseApiService } from "../../services/supabase-api.service";
 })
 
 export class TodoItemComponent {
+    private router = inject(Router);
     private supabaseApiService = inject(SupabaseApiService);
     readonly todo: InputSignal<IToDo> = input.required<IToDo>();
     readonly members: InputSignal<IUser[] | undefined> = input<IUser[] | undefined>();
@@ -59,6 +61,10 @@ export class TodoItemComponent {
 
     expand(): void {
         this.isExpanded = !this.isExpanded;
+    }
+
+    reviewDetails(): void {
+        this.router.navigate(['/todo-details'], {state: {data: {todo: this.todo(), members: this.members()}}});
     }
 
     private updateToDo(body: Partial<IToDo>): void {
