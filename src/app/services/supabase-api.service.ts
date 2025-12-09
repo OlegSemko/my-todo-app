@@ -75,7 +75,7 @@ export class SupabaseApiService {
     return from(promise);
   }
 
-  updateTodo(taskId: number, body: Partial<IToDo>) {
+  updateTodo(taskId: number | undefined, body: Partial<IToDo>) {
     const promise = this.supabase.client
       .from('tasks')
       .update(body)
@@ -85,7 +85,7 @@ export class SupabaseApiService {
     return from(promise);
   }
 
-  deleteTodo(taskId: number) {
+  deleteTodo(taskId: number | undefined) {
     const promise = this.supabase.client
       .from('tasks')
       .delete()
@@ -112,6 +112,29 @@ export class SupabaseApiService {
     const promise = this.supabase.client
       .from('user_profiles')
       .select('*');
+
+    return from(promise);
+  }
+
+  getTaskComments(taskId: any): Observable<any> {
+    const promise = this.supabase.client
+    .from('task_comments_with_user')
+    .select('*')
+    .eq('task_id', taskId);
+
+    return from(promise);
+  }
+
+  addTaskComment(taskId: any, taskComment: string, currentUserId: string | undefined): Observable<any> {
+
+    const promise = this.supabase.client
+    .from('task_comments')
+    .insert([{
+      task_id: taskId,
+      user_id: currentUserId,
+      comment: taskComment,
+    }])
+    .select();
 
     return from(promise);
   }

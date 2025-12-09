@@ -1,0 +1,64 @@
+:host {
+    width: 100%;
+}
+
+.todo-item {
+    background-color: gray;
+    border-radius: 4px;
+    color: yellow;
+    padding: 8px;
+    transition: all .5s;
+    overflow: hidden;
+
+    &:hover {
+        background-color: #888888;
+        cursor: pointer;
+    }
+}
+
+.todo-header {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.todo-body {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.todo-details {
+    flex: 0 1 220px;
+}
+
+.todo-description {
+    flex: 1 1 200px;
+}
+
+.todo-title {
+    font-weight: 800;
+    font-size: 24px;
+}
+
+.control {
+    cursor: pointer;
+
+    &:hover {
+        color: red;
+    }
+}
+
+.todo-status, .todo-priority, .todo-assignee, .todo-due-date {
+    label {
+        display: inline-block;
+        width: 92px;
+    }
+}
+
+select, input {
+    background-color: gold;
+    border-radius: 4px;
+}
