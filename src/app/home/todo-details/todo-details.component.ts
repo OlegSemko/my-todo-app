@@ -78,7 +78,6 @@ export class TodoDetailsComponent {
     }
 
     addComment(): void {
-        console.log('adding');
         const comment = this.newComment.value;
         const currentUserId = this.authService.currentUser()?.id;
         this.supabaseApiService.addTaskComment(this.todo()?.id, comment, currentUserId)
@@ -86,7 +85,7 @@ export class TodoDetailsComponent {
                 if (result.error) {
                     console.log('error',result.error?.message);
                 } else {
-                    // update list of comments from response
+                    this.getTaskComments();
                 }
             });
     }
@@ -98,7 +97,12 @@ export class TodoDetailsComponent {
                 if (result.error) {
                     console.log('error',result.error?.message);
                 } else {
-                    this.taskComments.set(result.data);
+                    const comments = result.data
+                        .sort((a: IToDoComment, b: IToDoComment) => {
+                            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+                    })
+     
+                    this.taskComments.set(comments);
                 }
             })
     }

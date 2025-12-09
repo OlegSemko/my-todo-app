@@ -28,10 +28,7 @@ export class SupabaseApiService {
   getBoardsWithMembers() {
     const promise = this.supabase.client
       .from('boards_with_members')
-      .select('*')
-  //     .or(`owner_id.eq.${userId}`)
-  // .contains('members', [{ id: userId }]);
-      // .or(`owner_id.eq.${userId},members->>id.eq.${userId}`); // works but not returns members
+      .select('*');
 
     return from(promise);
   }
@@ -129,11 +126,11 @@ export class SupabaseApiService {
 
     const promise = this.supabase.client
     .from('task_comments')
-    .insert([{
+    .insert({
       task_id: taskId,
       user_id: currentUserId,
       comment: taskComment,
-    }])
+    })
     .select();
 
     return from(promise);
