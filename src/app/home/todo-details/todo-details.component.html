@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div class="created-at">{{ comment.created_at }}</div>
+                <div class="created-at">{{ comment.created_at | date }}</div>
 
                 <div class="user">{{ comment.user_metadata.username }}</div>
             }
