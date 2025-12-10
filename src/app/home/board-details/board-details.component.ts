@@ -65,6 +65,11 @@ export class BoardDetailsComponent implements OnInit {
         this.router.navigate(['/boards', this.boardId, 'create-task']);
     }
 
+
+    reloadTodos(): void {
+        this.getUsersTodos();
+    }
+
     private getUsersTodos(): void {
         this.isLoading.set(true);
         this.supabaseApiService.getBoardTodos(this.boardId)

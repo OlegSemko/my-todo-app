@@ -26,6 +26,7 @@
             <div class="todo-assignee">
                 <label for="assignee-select">Assignee:</label>
                 <select [formControl]="assignee" name="assignee" id="assignee-select">
+                    <option value="null" disabled>Not assigned</option>
                     @for (member of members(); track member?.id) {
                         <option [value]="member?.id">{{ member?.metadata?.username }}</option>
                     }

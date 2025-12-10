@@ -1,5 +1,5 @@
 import { DatePipe } from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, input, Output, InputSignal, EventEmitter } from "@angular/core";
 import { IToDo, IUser } from "../../intrefaces";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { SupabaseApiService } from "../../services/supabase-api.service";
@@ -15,6 +15,7 @@ import { Router } from "@angular/router";
 })
 
 export class TodoItemComponent {
+    @Output() todoChanged: EventEmitter<void> = new EventEmitter<void>();
     private router = inject(Router);
     private supabaseApiService = inject(SupabaseApiService);
     readonly todo: InputSignal<IToDo> = input.required<IToDo>();
@@ -39,7 +40,7 @@ export class TodoItemComponent {
 
         this.status.valueChanges
             .subscribe((status: string) => {
-                this.updateToDo({status});
+                this.updateToDo({status}, true);
             });
 
         this.dueDate.valueChanges
@@ -54,9 +55,14 @@ export class TodoItemComponent {
     }
 
     deleteItem(): void {
-        console.log('delete');
         this.supabaseApiService.deleteTodo(this.todo().id)
-            .subscribe();
+            .subscribe((result) => {
+                if (result.error) {
+                    console.log('error',result.error?.message);
+                } else {
+                    this.todoChanged.emit();
+                }
+            });
     }
 
     expand(): void {
@@ -67,8 +73,14 @@ export class TodoItemComponent {
         this.router.navigate(['/todo-details'], {state: {data: {todo: this.todo(), members: this.members()}}});
     }
 
-    private updateToDo(body: Partial<IToDo>): void {
+    private updateToDo(body: Partial<IToDo>, shouldReload = false): void {
         this.supabaseApiService.updateTodo(this.todo().id, body)
-            .subscribe();
+            .subscribe((result) => {
+                if (result.error) {
+                    console.log('error',result.error?.message);
+                } else {
+                    shouldReload && this.todoChanged.emit();
+                }
+            });
     }
 }
