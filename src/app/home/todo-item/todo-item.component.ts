@@ -18,7 +18,7 @@ export class TodoItemComponent {
     private router = inject(Router);
     private supabaseApiService = inject(SupabaseApiService);
     readonly todo: InputSignal<IToDo> = input.required<IToDo>();
-    readonly members: InputSignal<IUser[] | undefined> = input<IUser[] | undefined>();
+    readonly members: InputSignal<(IUser | undefined)[]> = input<(IUser | undefined)[]>([]);
     readonly status = new FormControl();
     readonly priority = new FormControl();
     readonly dueDate = new FormControl();

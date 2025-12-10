@@ -22,6 +22,10 @@ export class BoardDetailsComponent implements OnInit {
     readonly todos: WritableSignal<IToDo[]> = signal<IToDo[]>([]);
     readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
     readonly members: WritableSignal<IUser[]> = signal<IUser[]>([]);
+    readonly membersWithOwner: Signal<(IUser | undefined)[]> = computed(() => {
+        const members = this.board()?.members ?? [];
+        return [this.board()?.owner, ...members];
+    });
     readonly toDoStatusTasks: Signal<IToDo[]> = computed(() => {
         return this.todos().filter((todo: IToDo) => todo.status === 'to-do').sort((a: IToDo, b: IToDo) => b.priority - a.priority)
     });
