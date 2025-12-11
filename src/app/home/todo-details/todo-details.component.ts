@@ -20,7 +20,7 @@ export class TodoDetailsComponent {
     private supabaseApiService = inject(SupabaseApiService);
     private authService = inject(AuthService);
     readonly todo: WritableSignal<IToDo | undefined> = signal<IToDo | undefined>(undefined);
-    readonly members: WritableSignal<IUser[] | undefined> = signal<IUser[] | undefined>([]);
+    readonly members: WritableSignal<(IUser | undefined)[]> = signal<(IUser | undefined)[]>([]);
     readonly status = new FormControl();
     readonly priority = new FormControl();
     readonly dueDate = new FormControl();

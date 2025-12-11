@@ -20,6 +20,7 @@
         <div class="members">
             <div class="members-title">Board members:</div>
             <div class="members-list">
+                <span class="member">{{ board()?.owner?.metadata?.username }}</span><span>, </span>
                 @for (member of board()?.members; track member.id) {
                     <span class="member">{{ member.metadata.username }}</span><span>, </span>
                 }
@@ -52,7 +53,7 @@
             <div class="todo-list-title">To Do</div>
             @if (toDoStatusTasks().length) {
                 @for (todo of toDoStatusTasks(); track todo.id) {
-                    <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
+                    <app-todo-item [todo]="todo" [members]="membersWithOwner()" (todoChanged)="reloadTodos()"></app-todo-item>
                 }
             } @else {
                 No tasks found.
@@ -62,7 +63,7 @@
             <div class="todo-list-title">In Progress</div>
             @if (inProgressStatusTasks().length) {
                 @for (todo of inProgressStatusTasks(); track todo.id) {
-                    <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
+                    <app-todo-item [todo]="todo" [members]="membersWithOwner()" (todoChanged)="reloadTodos()"></app-todo-item>
                 }
             } @else {
                 No tasks found.
@@ -72,7 +73,7 @@
             <div class="todo-list-title">Done</div>
             @if (doneStatusTasks().length) {
                 @for (todo of doneStatusTasks(); track todo.id) {
-                    <app-todo-item [todo]="todo" [members]="board()?.members ?? []"></app-todo-item>
+                    <app-todo-item [todo]="todo" [members]="membersWithOwner()" (todoChanged)="reloadTodos()"></app-todo-item>
                 }
             } @else {
                 No tasks found.
