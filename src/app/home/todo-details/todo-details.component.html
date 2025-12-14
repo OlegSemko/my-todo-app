@@ -45,7 +45,9 @@
                     {{ todo()?.created_at | date }}
                 </div>
             </div>
-            <div class="control" (click)="deleteItem()">Delete</div>
+            @if(todo()?.created_by === authService.currentUser()?.id) {
+                <div class="custom-button" (click)="deleteItem()">Delete</div>
+            }
         </div>
 
         <div class="todo-description">
@@ -58,20 +60,29 @@
         <div class="add-comment">
             <label for="comment">Add a comment:</label>
             <textarea [formControl]="newComment" id="comment" name="comment"></textarea>
-            <input type="submit" value="Comment" (click)="addComment()">
+            <input class="form-button" type="submit" value="Comment" (click)="addComment()">
         </div>
 
         <div class="task-comments">
             @for (comment of taskComments(); track comment.id) {
-                <div class="comment">
-                    <div class="comment-text">
-                        {{ comment.comment }}
-                    </div>
+                <div class="comment-block">
+                    @if(isEditMode && commentInEditingId === comment.id) {
+                        <label for="edit-comment">Edit a comment:</label>
+                        <textarea [formControl]="editComment" id="edit-comment" name="edit-comment"></textarea>
+                        <input class="form-button" type="submit" value="Edit" (click)="onEditComment(comment.id)">
+                        <input class="form-button" type="submit" value="Cancel" (click)="onCancelEdit()">
+                    } @else {
+                        <div class="comment-text">
+                            {{ comment.comment }}
+                        </div>
+                        @if(comment.user_id === authService.currentUser()?.id) {
+                            <div class="custom-button" (click)="edit(comment)">Edit</div>
+                            <div class="custom-button" (click)="deleteComment(comment.id)">Delete</div>
+                        }
+                    }
+                    <div class="created-at">{{ comment.created_at | date }}</div>
+                    <div class="user">{{ comment.user_metadata.username }}</div>
                 </div>
-
-                <div class="created-at">{{ comment.created_at | date }}</div>
-
-                <div class="user">{{ comment.user_metadata.username }}</div>
             }
         </div>
     </div>

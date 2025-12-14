@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { SupabaseService } from './supabase.service';
-import { IToDo } from '../intrefaces';
+import { IToDo, IToDoComment } from '../intrefaces';
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseApiService {
@@ -132,6 +132,27 @@ export class SupabaseApiService {
       comment: taskComment,
     })
     .select();
+
+    return from(promise);
+  }
+
+  editTaskComment(commentId: any, body: Partial<IToDoComment>): Observable<any> {
+
+    const promise = this.supabase.client
+    .from('task_comments')
+    .update(body)
+    .eq('id', commentId)
+    .select();
+
+    return from(promise);
+  }
+
+  deleteTaskComment(commentId: any): Observable<any> {
+
+    const promise = this.supabase.client
+    .from('task_comments')
+    .delete()
+    .eq('id', commentId);
 
     return from(promise);
   }

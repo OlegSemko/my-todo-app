@@ -67,3 +67,17 @@ select, input {
     background-color: gold;
     border-radius: 4px;
 }
+
+.custom-button, .form-button {
+    background-color: lightgray;
+    display: inline-block;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all ease .5s;
+    color: black;
+
+    &:hover {
+        background-color: darkgray;
+    }
+}

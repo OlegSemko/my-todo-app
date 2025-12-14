@@ -1,4 +1,4 @@
-<div class="create-task-btn" (click)="handleCreateTask()">Create New Task</div>
+<div class="custom-button" (click)="handleCreateTask()">Create New Task</div>
 
 <div class="board-details">
     <div class="board-details-title">
@@ -33,8 +33,8 @@
                         <label for="member-select">Enter the member e-mail you wish to add:</label>
                         <input #memberEmail name="member" id="member-select">
                     </div>
-                    <div class="control">
-                        <input class="add-user-button" type="submit" value="Add a member" (click)="addUserToBoard(memberEmail.value)">
+                    <div>
+                        <input class="form-button" type="submit" value="Add a member" (click)="addUserToBoard(memberEmail.value)">
                     </div>
                 </div>
             </div>

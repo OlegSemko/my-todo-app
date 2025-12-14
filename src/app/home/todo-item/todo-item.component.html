@@ -48,8 +48,10 @@
                     {{ todo().created_at | date }}
                 </div>
             </div>
-            <div class="control" (click)="reviewDetails()">Review details</div>
-            <div class="control" (click)="deleteItem()">Delete</div>
+            <div class="custom-button" (click)="reviewDetails()">Review details</div>
+            @if(todo().created_by === authService.currentUser()?.id) {
+                <div class="custom-button" (click)="deleteItem()">Delete</div>
+            }
         </div>
 
         <div class="todo-description">
