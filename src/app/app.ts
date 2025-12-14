@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { SupabaseService } from './services/supabase.service';
 import { AuthService } from './services/auth.service';
@@ -13,11 +13,13 @@ import { AuthService } from './services/auth.service';
 export class App {
   supabaseService = inject(SupabaseService);
   authService = inject(AuthService);
+  private router = inject(Router);
   protected readonly title = signal('my-todo-app');
 
   ngOnInit(): void {
     this.supabaseService.client.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
+        console.log('signed', session?.user);
         this.authService.currentUser.set({
           id: session?.user.id,
           username: session?.user.identities?.at(0)?.identity_data?.['username'],
@@ -25,6 +27,7 @@ export class App {
         })
       } else if (event === 'SIGNED_OUT') {
         this.authService.currentUser.set(null);
+        this.router.navigateByUrl('/auth/login');
       }
     })
   }

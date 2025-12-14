@@ -4,6 +4,7 @@ import { IToDo, IUser } from "../../intrefaces";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { SupabaseApiService } from "../../services/supabase-api.service";
 import { Router } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
 
 
 @Component({
@@ -26,6 +27,7 @@ export class TodoItemComponent {
     readonly assignee = new FormControl();
 
     isExpanded = false;
+    authService = inject(AuthService);
 
     ngOnInit(): void {
         this.status.setValue(this.todo().status, { emitEvent: false });

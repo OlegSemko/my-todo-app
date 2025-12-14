@@ -18,7 +18,7 @@ import { finalize } from "rxjs/operators";
 
 export class TodoDetailsComponent {
     private supabaseApiService = inject(SupabaseApiService);
-    private authService = inject(AuthService);
+    authService = inject(AuthService);
     readonly todo: WritableSignal<IToDo | undefined> = signal<IToDo | undefined>(undefined);
     readonly members: WritableSignal<(IUser | undefined)[]> = signal<(IUser | undefined)[]>([]);
     readonly status = new FormControl();
@@ -26,9 +26,11 @@ export class TodoDetailsComponent {
     readonly dueDate = new FormControl();
     readonly assignee = new FormControl();
     readonly newComment = new FormControl();
+    readonly editComment = new FormControl();
     readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
     readonly taskComments: WritableSignal<IToDoComment[]> = signal<IToDoComment[]>([]);
-
+    isEditMode: boolean = false;
+    commentInEditingId: string = '';
     constructor(private router: Router) {
     const navigation = this.router.getCurrentNavigation();
 
@@ -36,8 +38,6 @@ export class TodoDetailsComponent {
       const receivedData = navigation.extras.state['data'];
       this.todo.set(receivedData.todo);
       this.members.set(receivedData.members);
-
-      console.log('Received Todo:', receivedData);
     } else {
       console.warn('Navigation state not found. Redirecting or showing error...');
       this.router.navigate(['/boards']);
@@ -86,8 +86,47 @@ export class TodoDetailsComponent {
                     console.log('error',result.error?.message);
                 } else {
                     this.getTaskComments();
+                    this.newComment.reset();
                 }
             });
+    }
+
+    edit(comment: IToDoComment): void {
+        this.commentInEditingId = comment.id;
+        this.isEditMode = true;
+        this.editComment.setValue(comment.comment);
+    }
+
+    onEditComment(commentId: string): void {
+        this.supabaseApiService.editTaskComment(commentId, {comment: this.editComment.value})
+        .subscribe((result) => {
+            if (result.error) {
+                    console.log('error',result.error?.message);
+                } else {
+                    this.isEditMode = false;
+                    this.commentInEditingId = '';
+                    this.getTaskComments();
+                }
+        });
+    }
+
+    onCancelEdit(): void {
+        this.isEditMode = false;
+        this.commentInEditingId = '';
+    }
+
+    deleteComment(commentId: string): void {
+        this.supabaseApiService.deleteTaskComment(commentId)
+        .subscribe((result) => {
+            if (result.error) {
+                    console.log('error',result.error?.message);
+                } else {
+                    const comments = this.taskComments()
+                        .filter((a: IToDoComment) => a.id !== commentId)
+     
+                    this.taskComments.set(comments);
+                }
+        });
     }
 
     private getTaskComments(): void {

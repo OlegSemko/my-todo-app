@@ -51,9 +51,9 @@ export interface IToDo {
 }
 
 export interface IToDoComment {
-  id: any;
-  task_id: any;
-  user_id: any;
+  id: string;
+  task_id: number;
+  user_id: string;
   comment: string;
   created_at: string;
   user_email: string;

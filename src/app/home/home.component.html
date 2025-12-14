@@ -1,7 +1,7 @@
 @if (isLoading()) {
     Loading...
 } @else {
-    <div class="create-board-btn" routerLink="/create-board">Create Board</div>
+    <div class="custom-button" routerLink="/create-board">Create Board</div>
     <div class="boards-container">
         @for (item of boards(); track item.id) {
             <app-board [board]="item" (click)="goToBoard(item.id)"></app-board>
