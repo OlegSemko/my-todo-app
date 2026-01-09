@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { SupabaseService } from './supabase.service';
-import { IToDo } from '../intrefaces';
+import { IToDo, IToDoComment } from '../intrefaces';
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseApiService {
@@ -28,10 +28,7 @@ export class SupabaseApiService {
   getBoardsWithMembers() {
     const promise = this.supabase.client
       .from('boards_with_members')
-      .select('*')
-  //     .or(`owner_id.eq.${userId}`)
-  // .contains('members', [{ id: userId }]);
-      // .or(`owner_id.eq.${userId},members->>id.eq.${userId}`); // works but not returns members
+      .select('*');
 
     return from(promise);
   }
@@ -75,7 +72,7 @@ export class SupabaseApiService {
     return from(promise);
   }
 
-  updateTodo(taskId: number, body: Partial<IToDo>) {
+  updateTodo(taskId: number | undefined, body: Partial<IToDo>) {
     const promise = this.supabase.client
       .from('tasks')
       .update(body)
@@ -85,7 +82,7 @@ export class SupabaseApiService {
     return from(promise);
   }
 
-  deleteTodo(taskId: number) {
+  deleteTodo(taskId: number | undefined) {
     const promise = this.supabase.client
       .from('tasks')
       .delete()
@@ -112,6 +109,50 @@ export class SupabaseApiService {
     const promise = this.supabase.client
       .from('user_profiles')
       .select('*');
+
+    return from(promise);
+  }
+
+  getTaskComments(taskId: any): Observable<any> {
+    const promise = this.supabase.client
+    .from('task_comments_with_user')
+    .select('*')
+    .eq('task_id', taskId);
+
+    return from(promise);
+  }
+
+  addTaskComment(taskId: any, taskComment: string, currentUserId: string | undefined): Observable<any> {
+
+    const promise = this.supabase.client
+    .from('task_comments')
+    .insert({
+      task_id: taskId,
+      user_id: currentUserId,
+      comment: taskComment,
+    })
+    .select();
+
+    return from(promise);
+  }
+
+  editTaskComment(commentId: any, body: Partial<IToDoComment>): Observable<any> {
+
+    const promise = this.supabase.client
+    .from('task_comments')
+    .update(body)
+    .eq('id', commentId)
+    .select();
+
+    return from(promise);
+  }
+
+  deleteTaskComment(commentId: any): Observable<any> {
+
+    const promise = this.supabase.client
+    .from('task_comments')
+    .delete()
+    .eq('id', commentId);
 
     return from(promise);
   }

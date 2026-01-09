@@ -37,7 +37,6 @@ export class CreateTaskComponent {
             if (result.error) {
                 console.log('error',result.error?.message);
             } else {
-                console.log('success', result);
                 this.router.navigate(['boards', this.boardId]);
             }
         });

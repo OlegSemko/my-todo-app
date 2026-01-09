@@ -42,5 +42,20 @@ export interface IToDo {
   created_at: string;
   owner_email: string;
   owner_metadata: IUserMetaData;
+  assignee_metadata: IUserMetaData;
+  assignee_id: string;
+  assignee_email: string;
   status: string | null;
+  priority: number;
+  due_date: string;
+}
+
+export interface IToDoComment {
+  id: string;
+  task_id: number;
+  user_id: string;
+  comment: string;
+  created_at: string;
+  user_email: string;
+  user_metadata: IUserMetaData;
 }

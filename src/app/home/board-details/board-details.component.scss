@@ -10,28 +10,84 @@
     flex-direction: column;
 }
 
+.blocks-container {
+    display: flex;
+    gap: 12px;
+    height: calc(100vh - 280px);
+}
+
 .todo-list {
     display: flex;
     gap: 8px;
     flex-direction: column;
     align-content: center;
     align-items: center;
+    flex: 1 1;
+    padding: 8px;
+    border: 1px solid yellow;
+    border-radius: 4px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: auto;
 }
 
-.member {
-    cursor: pointer;
+.todo-status {
+    background-color: lemonchiffon;
 }
 
-.create-task-btn {
+.inprogress-status {
+    background-color: lightgreen;
+}
+
+.done-status {
+    background-color: lightblue;
+}
+
+.custom-button, .form-button {
     background-color: lightgray;
     display: inline-block;
     padding: 4px;
     border-radius: 4px;
     cursor: pointer;
-    margin-bottom: 20px;
     transition: all ease .5s;
 
     &:hover {
         background-color: darkgray;
+    }
+}
+
+.board-details {
+    margin-bottom: 20px;
+}
+
+.board-details-title {
+    text-align: center;
+    font-size: 36px;
+    color: yellow;
+    line-height: 48px;
+}
+
+.board-details-body {
+    display: flex;
+    justify-content: space-between;
+
+    &.board-info, &.members {
+        flex: 1 1;
+    }
+}
+
+.members-title, .members-list {
+    margin-bottom: 4px;
+}
+
+@media only screen and (max-width: 800px) {
+    .blocks-container {
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    .todo-list {
+        flex: 0 0 max-content;
+        height: unset;
     }
 }
