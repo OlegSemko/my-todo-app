@@ -1,7 +1,7 @@
 :host {
     display: block;
     padding: 12px;
-    background-color: #999999;
+    background-color: lightslategray;
     width: 100%;
 }
 
@@ -24,7 +24,7 @@
     align-items: center;
     flex: 1 1;
     padding: 8px;
-    border: 1px solid yellow;
+    border: 2px solid black;
     border-radius: 4px;
     height: 100%;
     box-sizing: border-box;
@@ -32,11 +32,11 @@
 }
 
 .todo-status {
-    background-color: lemonchiffon;
+    background-color: lightblue;
 }
 
 .inprogress-status {
-    background-color: lightgreen;
+    background-color: lightblue;
 }
 
 .done-status {
@@ -44,6 +44,8 @@
 }
 
 .custom-button, .form-button {
+    margin-right: 10px;
+    
     background-color: lightgray;
     display: inline-block;
     padding: 4px;
@@ -57,18 +59,31 @@
 }
 
 .board-details {
-    margin-bottom: 20px;
+    position: absolute;
+    background-color: white;
+    right: 0;
+    display: none;
+    // overflow: hidden;
+    // transition: right 0.5s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+    &.active {
+        display: block;
+        // height: auto;
+        // width: 300px;
+    }
 }
 
 .board-details-title {
     text-align: center;
-    font-size: 36px;
-    color: yellow;
+    font-size: 30px;
+    color: black;
     line-height: 48px;
+    margin-bottom: 10px;
 }
 
 .board-details-body {
-    display: flex;
+    margin: 15px;
     justify-content: space-between;
 
     &.board-info, &.members {
@@ -90,4 +105,14 @@
         flex: 0 0 max-content;
         height: unset;
     }
+}
+
+.header{
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.butons{
+    display: inline-block;
 }

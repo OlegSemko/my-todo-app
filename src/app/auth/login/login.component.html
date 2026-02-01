@@ -1,15 +1,23 @@
 <div [formGroup]="form" class="form">
+    
+    <h2>Login</h2>
     <div class="control">
-        <label for="email">Email Address:</label>
+        <label for="email"><b>Електронна пошта:</b></label>
+    </div>
+    <div class="control">
         <input formControlName=email type="text" id="email">
     </div>
     <div class="control">
-        <label for="password">Password:</label>
-        <input formControlName=password type="password" id="password">
+        <label for="password" type="password"><b>Пароль:</b></label>
     </div>
     <div class="control">
-        <input type="submit" value="Login" (click)="onSubmit()">
+        <input formControlName=password type="password" id="password">
     </div>
+    
+        <input type="submit" value="Login" (click)="onSubmit()">
+    
+        <p>Don't have an account? <a _ngcontent-ng-c269159490="" routerlink="/auth/register" routerlinkactive="active" class="login-link" href="/auth/register">Register</a></p>
+    
 </div>
 
 @if (!!errorMessage()) {
