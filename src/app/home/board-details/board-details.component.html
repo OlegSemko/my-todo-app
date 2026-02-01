@@ -1,50 +1,52 @@
-<div class="custom-button" (click)="handleCreateTask()">Create New Task</div>
-
-<div class="board-details">
-    <div class="board-details-title">
-        {{ board()?.title }}
-    </div>
-    <div class="board-details-body">
-        <div class="board-info">
-            <span>
-                Created by: {{ board()?.owner?.metadata?.username }}
-            </span>
-            <span>
-                {{ board()?.owner?.email }}
-            </span>
-            <div class="board-header">
-                Created at: {{ board()?.created_at | date }}
-            </div>
+<div class="header">
+     <div class="board-details-title">
+            {{ board()?.title }}
         </div>
-
-        <div class="members">
-            <div class="members-title">Board members:</div>
-            <div class="members-list">
-                <span class="member">{{ board()?.owner?.metadata?.username }}</span><span>, </span>
-                @for (member of board()?.members; track member.id) {
-                    <span class="member">{{ member.metadata.username }}</span><span>, </span>
-                }
-            </div>
-
-            <div class="add-members">
-                Add a member
-                <div class="member-select">
-                    <div class="control">
-                        <label for="member-select">Enter the member e-mail you wish to add:</label>
-                        <input #memberEmail name="member" id="member-select">
+    <div class="butons">
+        <div class="custom-button" (click)="handleCreateTask()">Додати завдання</div>
+        <div class="custom-button" (click)="switchActive()">---</div>
+        <div class="board-details" [class.active]="isActive">
+           
+            <div class="board-details-body">
+                <div class="board-info">
+                    <span>
+                        Дошку створив: {{ board()?.owner?.metadata?.username }}
+                    </span>
+                    <span>
+                        {{ board()?.owner?.email }}
+                    </span>
+                    <div class="board-header">
+                        Дошку створено: {{ board()?.created_at | date }}
                     </div>
-                    <div>
-                        <input class="form-button" type="submit" value="Add a member" (click)="addUserToBoard(memberEmail.value)">
+                </div>
+    <br>
+                <div class="members">
+                    <div class="members-title">Учасники:</div>
+                    <div class="members-list">
+                        <span class="member">{{ board()?.owner?.metadata?.username }}</span><span>, </span>
+                        @for (member of board()?.members; track member.id) {
+                            <span class="member">{{ member.metadata.username }}</span><span>, </span>
+                        }
+                    </div>
+    <br>
+                    <div class="add-members">
+                        Додати учасника
+                        <div class="member-select">
+                            <div class="control">
+                                <label for="member-select">Введіть електрону пошту користувача якого бажаєте додати:</label>
+                                <input #memberEmail name="member" id="member-select">
+                            </div>
+                            <div>
+                                <input class="form-button" type="submit" value="Додати користувача" (click)="addUserToBoard(memberEmail.value)">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+    
         </div>
     </div>
-
-
-    
 </div>
-
 <div class="blocks-container">
     @if (isLoading()) {
         Loading...

@@ -7,7 +7,7 @@
     <div class="todo-body">
         <div class="todo-details">
             <div class="todo-status">
-                <label for="status-select">Task status:</label>
+                <label for="status-select">Статус:</label>
                 <select [formControl]="status" name="status" id="status-select">
                     <option value="to-do">To do</option>
                     <option value="in-progress">In progress</option>
@@ -15,7 +15,7 @@
                 </select>
             </div>
             <div class="todo-priority">
-                <label for="priority-select">Task priority:</label>
+                <label for="priority-select">Пріоритетність:</label>
                 <select [formControl]="priority" name="priority" id="priority-select">
                     <option value="1">Low</option>
                     <option value="2">Normal</option>
@@ -24,7 +24,7 @@
                 </select>
             </div>
             <div class="todo-assignee">
-                <label for="assignee-select">Assignee:</label>
+                <label for="assignee-select">Виконавець:</label>
                 <select [formControl]="assignee" name="assignee" id="assignee-select">
                     <option value="null" disabled>Not assigned</option>
                     @for (member of members(); track member?.id) {
@@ -33,13 +33,13 @@
                 </select>
             </div>
             <div class="todo-due-date">
-                <label for="dueDate">Due Date:</label>
+                <label for="dueDate">Дедлайн:</label>
                 <input [formControl]="dueDate" type="date" id="dueDate" name="dueDate">
             </div>
         
             <div class="todo-footer">
                 <div class="todo-author">
-                    Created by: {{ todo()?.owner_metadata?.username }}
+                    Створив: {{ todo()?.owner_metadata?.username }}
                 </div>
                 <div class="todo-creation_date">
                     {{ todo()?.created_at | date }}
@@ -51,14 +51,15 @@
         </div>
 
         <div class="todo-description">
-            Description - {{ todo()?.description }}
+            Опис: {{ todo()?.description }}
         </div>
     </div>
+    <br>
     <div class="todo-comments">
-        Comments
+        Коментарі
 
         <div class="add-comment">
-            <label for="comment">Add a comment:</label>
+            <label for="comment">Додати коментар:</label>
             <textarea [formControl]="newComment" id="comment" name="comment"></textarea>
             <input class="form-button" type="submit" value="Comment" (click)="addComment()">
         </div>

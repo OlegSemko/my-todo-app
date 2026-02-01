@@ -1,18 +1,18 @@
 <div class="create-form-block">
     <div class="form-title">
-        Create ToDo
+        Створити в ToDo
     </div>
     <div [formGroup]="taskCreateForm" class="form-container">
         <div class="control">
-            <label for="title">Task Title:</label>
+            <label for="title">Назва завдання:</label>
             <input formControlName=taskTitle type="text" class="todo-title" id="title">
         </div>
         <div class="control">
-            <label for="description">Task Description:</label>
+            <label for="description">Опис завдання:</label>
             <textarea formControlName=taskDescription type="text" class="todo-description" id="description"></textarea>
         </div>
         <div class="control">
-            <input type="submit" value="Create Task" (click)="onSubmit()">
+            <input type="submit" value="Створити завдання" (click)="onSubmit()">
         </div>
     </div>
 </div>

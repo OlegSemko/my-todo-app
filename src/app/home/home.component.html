@@ -1,10 +1,13 @@
 @if (isLoading()) {
     Loading...
 } @else {
-    <div class="custom-button" routerLink="/create-board">Create Board</div>
+    <!--<div class="custom-button" routerLink="/create-board">Створити дошку</div>-->
     <div class="boards-container">
         @for (item of boards(); track item.id) {
             <app-board [board]="item" (click)="goToBoard(item.id)"></app-board>
         }
+        <div class="container">
+            <div class="button" routerLink="/create-board"> Створити дошку </div>
+        </div>
     </div>
 }

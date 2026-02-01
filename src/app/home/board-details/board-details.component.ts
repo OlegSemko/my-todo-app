@@ -41,6 +41,7 @@ export class BoardDetailsComponent implements OnInit {
     readonly board: WritableSignal<IMemberBoard | undefined> = signal<IMemberBoard | undefined>(undefined);
 
     private boardId: number = 0;
+    isActive = false;
 
     ngOnInit(): void {
         this.boardId = +this.route.snapshot.paramMap.get('id')!;
@@ -68,6 +69,10 @@ export class BoardDetailsComponent implements OnInit {
 
     reloadTodos(): void {
         this.getUsersTodos();
+    }
+
+    switchActive(): void {
+        this.isActive = !this.isActive;
     }
 
     private getUsersTodos(): void {

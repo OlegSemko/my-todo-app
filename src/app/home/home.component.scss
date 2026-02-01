@@ -1,6 +1,6 @@
 :host {
     padding: 12px;
-    background-color: #999999;
+    background-color: lightslategray;
     width: 100%;
 }
 
@@ -22,4 +22,31 @@
     &:hover {
         background-color: darkgray;
     }
+}
+.button{
+    height: 175px;
+    width: 175px;
+    display: grid;
+    background-color: white;
+    border-radius: 4px;
+    color: black;
+    display: flex;
+    place-items: center;
+    flex-direction: column;
+    //justify-content: space-between;
+    //align-content: center;
+    //align-items: center;
+    padding: 8px;
+    transition: all 0.5s;
+    border: 2px solid black;
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(53, 50, 50);
+    }
+}
+.container{
+    display: grid;
+    place-items: center;
+    height: 219.2px;
+    width: 219.2px;
 }
